@@ -283,7 +283,45 @@ nyc_airbnb %>%
 
 ``` r
 nyc_airbnb %>% 
+  filter(price < 500) %>% 
+  sample_n(1000) %>% 
   leaflet() %>% 
   addTiles() %>% 
   addMarkers(~lat, ~long)
+```
+
+-   Tiles
+
+``` r
+nyc_airbnb %>% 
+  filter(price < 500) %>% 
+  sample_n(1000) %>% 
+  leaflet() %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+
+  addMarkers(~lat, ~long)
+```
+
+-   markers
+
+``` r
+nyc_airbnb %>% 
+  filter(price < 500) %>% 
+  sample_n(1000) %>% 
+  leaflet() %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  addCircleMarkers(~lat, ~long, radius = 1)
+```
+
+-   Colors
+
+``` r
+pal = 
+  colorNumeric("viridis", NULL)
+nyc_airbnb %>% 
+  filter(price < 500) %>% 
+  sample_n(1000) %>% 
+  leaflet() %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+addCircleMarkers(~lat, ~long, radius = 1, ~pal(price)) 
 ```
